@@ -5,10 +5,17 @@ import (
 	"github.com/server2565543706/gin-vue/src"
 )
 
-func Run() {
+func SetupRouter() *gin.Engine {
 	r := gin.Default()
 
-	r.GET("/api/user/register", src.Register)
+	r.Static("/static", "static")
+	r.LoadHTMLGlob("template/*")
 
-	r.Run()
+	api := r.Group("v1")
+	{
+		api.POST("/user/register", src.Register)
+
+	}
+
+	return r
 }
